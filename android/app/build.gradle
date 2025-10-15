@@ -78,8 +78,11 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all {
             def buildType = variant.buildType.name
+            def versionCode = variant.versionCode
+            def abi = output.getFilter(com.android.build.OutputFile.ABI)
+            if (abi == null) abi = "universal"
             // 输出文件名示例：MyApp-1.0.0-release.apk
-            outputFileName = "flutter_browser-${defaultConfig.versionName}-${buildType}.apk"
+            outputFileName = "flutter_browser-${defaultConfig.versionName}-${versionCode}-${abi}.apk"
         }
     }
 }
