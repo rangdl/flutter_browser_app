@@ -76,7 +76,7 @@ android {
         disable 'InvalidPackage'
     }
     applicationVariants.all { variant ->
-        variant.outputs.all {
+        variant.outputs.all { output ->
             def buildType = variant.buildType.name
             def versionCode = variant.versionCode
             def abi = output.getFilter(com.android.build.OutputFile.ABI)
