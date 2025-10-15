@@ -114,54 +114,54 @@ jobs:
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  build-windows:
-    runs-on: windows-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: master
-
-      - name: Install yq command line utility
-        run: choco install yq
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.24.x"
-          cache: true
-      - name: Restore Packages
-        run: |
-          flutter pub get
-
-      - name: Install flutter_distributor
-        run: dart pub global activate flutter_distributor
-
-      - name: Build Windows
-        run: |
-          flutter_distributor package --platform windows --targets msix,zip --skip-clean
-
-      - name: Upload Windows APP to Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows
-          path: |
-            dist/*/*.msix
-            dist/*/*.zip
-
-      - name: Extract version from pubspec.yaml
-        id: yq
-        run: |
-          yq -r '.version' 'pubspec.yaml'
-
-      - name: Upload Release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: "${{ steps.yq.outputs.result }}"
-          token: ${{ secrets.TOKEN }}
-          files: |
-            dist/*/*.msix
-            dist/*/*.zip
-
-      - run: echo "🍏 Windows job's status is ${{ job.status }}."
+#  build-windows:
+#    runs-on: windows-latest
+#    permissions:
+#      contents: write
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          ref: master
+#
+#      - name: Install yq command line utility
+#        run: choco install yq
+#
+#      - name: Setup Flutter
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: "3.24.x"
+#          cache: true
+#      - name: Restore Packages
+#        run: |
+#          flutter pub get
+#
+#      - name: Install flutter_distributor
+#        run: dart pub global activate flutter_distributor
+#
+#      - name: Build Windows
+#        run: |
+#          flutter_distributor package --platform windows --targets msix,zip --skip-clean
+#
+#      - name: Upload Windows APP to Artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: windows
+#          path: |
+#            dist/*/*.msix
+#            dist/*/*.zip
+#
+#      - name: Extract version from pubspec.yaml
+#        id: yq
+#        run: |
+#          yq -r '.version' 'pubspec.yaml'
+#
+#      - name: Upload Release
+#        uses: softprops/action-gh-release@v2
+#        with:
+#          name: "${{ steps.yq.outputs.result }}"
+#          token: ${{ secrets.TOKEN }}
+#          files: |
+#            dist/*/*.msix
+#            dist/*/*.zip
+#
+#      - run: echo "🍏 Windows job's status is ${{ job.status }}."
