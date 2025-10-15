@@ -46,7 +46,6 @@ android {
     }
 
     defaultConfig {
-        appName "flutter_browser"
         applicationId "com.pichillilorenzo.flutter_browser"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 34
@@ -78,10 +77,9 @@ android {
     }
     applicationVariants.all { variant ->
         variant.outputs.all {
-            def appName = defaultConfig.appName // 替换为你的应用名称
             def buildType = variant.buildType.name
             // 输出文件名示例：MyApp-1.0.0-release.apk
-            outputFileName = "${appName}-${defaultConfig.versionName}-${buildType}.apk"
+            outputFileName = "flutter_browser-${defaultConfig.versionName}-${buildType}.apk"
         }
     }
 }
